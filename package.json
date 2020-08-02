@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "description": "JS config loader with validation",
   "keywords": [
-    "js-yaml",
-    "schema"
+    "args",
+    "config",
+    "yaml"
   ],
   "main": "out/main.js",
   "types": "out/index.d.ts",
