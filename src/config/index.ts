@@ -1,6 +1,6 @@
 import { doesExist, InvalidArgumentError, isNil, NotFoundError } from '@apextoaster/js-utils';
 import { CONFIG_SCHEMA, includeSchema } from '@apextoaster/js-yaml-schema';
-import { safeLoad } from 'js-yaml';
+import { safeLoad, Schema } from 'js-yaml';
 
 import { completePaths } from '../utils';
 
@@ -11,15 +11,7 @@ export function loadConfig<T extends object>(name: string, ...extras: Array<stri
   for (const p of paths) {
     const data = readConfig(p);
     if (doesExist(data)) {
-      const config = safeLoad(data, {
-        schema: CONFIG_SCHEMA,
-      });
-
-      if (isNil(config) || typeof config !== 'object') {
-        throw new InvalidArgumentError('loaded config was not an object');
-      }
-
-      return config as T;
+      return loadObject(data, CONFIG_SCHEMA);
     }
   }
 
@@ -40,4 +32,17 @@ export function readConfig(path: string): string | undefined {
     }
     throw err;
   }
+}
+
+/* eslint-disable-next-line */
+export function loadObject(data: string, schema: Schema): any {
+  const val = safeLoad(data, {
+    schema,
+  });
+
+  if (isNil(val) || typeof val !== 'object') {
+    throw new InvalidArgumentError('loaded config was not an object');
+  }
+
+  return val;
 }

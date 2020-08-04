@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { includeSchema } from '@apextoaster/js-yaml-schema';
 
 /**
  * With the given name, generate all potential config paths in their complete, absolute form.
@@ -11,15 +11,15 @@ export function completePaths(name: string, extras: Array<string>): Array<string
 
   const home = process.env.HOME;
   if (typeof home === 'string' && home !== '') {
-    paths.push(join(home, name));
+    paths.push(includeSchema.join(home, name));
   }
 
   if (__dirname !== '') {
-    paths.push(join(__dirname, name));
+    paths.push(includeSchema.join(__dirname, name));
   }
 
   for (const e of extras) {
-    paths.push(join(e, name));
+    paths.push(includeSchema.join(e, name));
   }
 
   return paths;
