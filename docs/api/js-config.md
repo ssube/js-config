@@ -14,8 +14,10 @@
 
 |  Function | Description |
 |  --- | --- |
+|  [completePaths(name, extras)](./js-config.completepaths.md) | With the given name, generate all potential config paths in their complete, absolute form.<!-- -->This will include the value of <code>ISOLEX_HOME</code>, <code>HOME</code>, the current working directory, and any extra paths passed as the final arguments. |
 |  [loadArgs(args)](./js-config.loadargs.md) |  |
 |  [loadConfig(name, extras)](./js-config.loadconfig.md) |  |
+|  [loadObject(data, schema)](./js-config.loadobject.md) |  |
 |  [readArgs(proc)](./js-config.readargs.md) |  |
 |  [readConfig(path)](./js-config.readconfig.md) |  |
 

@@ -1,5 +1,7 @@
 {
 	"names": [
+		"@apextoaster/js-yaml-schema",
+		"ajv",
 		"chai",
 		"js-yaml",
 		"lodash",
