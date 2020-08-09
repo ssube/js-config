@@ -1,11 +1,12 @@
 import { doesExist, NotFoundError } from '@apextoaster/js-utils';
-import { CONFIG_SCHEMA, includeOptions } from '@apextoaster/js-yaml-schema';
+import { IncludeOptions } from '@apextoaster/js-yaml-schema';
 
 import { BaseSourceOptions } from '../config';
 import { loadObject } from '../utils';
 
 export interface FileSourceOptions extends BaseSourceOptions {
   key: string;
+  include: IncludeOptions;
   name: string;
   paths: Array<string>;
   type: 'file';
@@ -13,32 +14,35 @@ export interface FileSourceOptions extends BaseSourceOptions {
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 export function loadFile(options: FileSourceOptions): any {
-  const paths = completePaths(options.name, options.paths);
+  const data = readFile(options);
 
-  for (const p of paths) {
-    const data = readFile(p);
-    if (doesExist(data)) {
-      return loadObject(data, CONFIG_SCHEMA);
-    }
+  if (doesExist(data)) {
+    return loadObject(data, options.include.schema);
   }
 
   throw new NotFoundError('unable to load config');
 }
 
-export function readFile(path: string): string | undefined {
-  // need to call this read to catch the error, need to catch the error to check the code
-  try {
-    /* eslint-disable-next-line sonarjs/prefer-immediate-return */
-    const data = includeOptions.read(path, {
-      encoding: 'utf-8',
-    });
-    return data;
-  } catch (err) {
-    if (err.code === 'ENOENT') {
-      return undefined;
+export function readFile(options: FileSourceOptions): string | undefined {
+  const paths = completePaths(options.name, options.paths, options.include);
+
+  for (const p of paths) {
+    // need to call this read to catch the error, need to catch the error to check the code
+    try {
+      /* eslint-disable-next-line sonarjs/prefer-immediate-return */
+      const data = options.include.read(p, {
+        encoding: 'utf-8',
+      });
+      return data;
+    } catch (err) {
+      if (err.code === 'ENOENT') {
+        return undefined;
+      }
+      throw err;
     }
-    throw err;
   }
+
+  return undefined;
 }
 
 /**
@@ -47,20 +51,20 @@ export function readFile(path: string): string | undefined {
  * This will include the value of `ISOLEX_HOME`, `HOME`, the current working directory, and any extra paths
  * passed as the final arguments.
  */
-export function completePaths(name: string, extras: Array<string>): Array<string> {
+export function completePaths(name: string, basePaths: Array<string>, options: IncludeOptions): Array<string> {
   const paths = [];
 
   const home = process.env.HOME;
   if (typeof home === 'string' && home !== '') {
-    paths.push(includeOptions.join(home, name));
+    paths.push(options.join(home, name));
   }
 
   if (__dirname !== '') {
-    paths.push(includeOptions.join(__dirname, name));
+    paths.push(options.join(__dirname, name));
   }
 
-  for (const e of extras) {
-    paths.push(includeOptions.join(e, name));
+  for (const p of basePaths) {
+    paths.push(options.join(p, name));
   }
 
   return paths;

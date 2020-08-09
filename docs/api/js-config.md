@@ -21,7 +21,7 @@
 |  [loadObject(data, schema)](./js-config.loadobject.md) |  |
 |  [readArgs(options)](./js-config.readargs.md) |  |
 |  [readEnv(options)](./js-config.readenv.md) | Read each env var with the given prefix. |
-|  [readFile(path)](./js-config.readfile.md) |  |
+|  [readFile(options)](./js-config.readfile.md) |  |
 
 ## Interfaces
 

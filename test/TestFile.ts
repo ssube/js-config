@@ -1,34 +1,32 @@
 import { NotFoundError } from '@apextoaster/js-utils';
-import { includeOptions } from '@apextoaster/js-yaml-schema';
+import { IncludeOptions, createSchema } from '@apextoaster/js-yaml-schema';
 import { expect } from 'chai';
 import { existsSync, readFileSync, realpathSync } from 'fs';
+import { DEFAULT_SAFE_SCHEMA } from 'js-yaml';
 import { join } from 'path';
 
 import { loadFile, readFile } from '../src/file';
 
-const originalOptions = {
-  ...includeOptions,
+const TEST_OPTIONS: IncludeOptions = {
+  exists: existsSync,
+  join,
+  /* eslint-disable-next-line */
+  read: readFileSync as any,
+  resolve: realpathSync,
+  schema: DEFAULT_SAFE_SCHEMA,
 };
 
-function fsOptions() {
-  includeOptions.exists = existsSync;
-  includeOptions.join = join;
-  /* eslint-disable-next-line */
-  includeOptions.read = readFileSync as any;
-  includeOptions.resolve = realpathSync;
-}
-
 describe('load config helper', async () => {
-  beforeEach(() => {
-    fsOptions();
-  });
+  it('should load an existing config', () => {
+    const include = {
+      ...TEST_OPTIONS,
+    };
+    const schema = createSchema({
+      include,
+    });
 
-  afterEach(() => {
-    Object.assign(includeOptions, originalOptions);
-  });
-
-  it('should load an existing config', () =>
     expect(loadFile({
+      include: TEST_OPTIONS,
       key: '',
       name: 'config-stderr.yml',
       paths: [
@@ -43,22 +41,38 @@ describe('load config helper', async () => {
           stream: process.stderr,
         },
       },
-    })
-  );
+    });
+  });
 
-  it('should throw when config is missing', () =>
-    expect(loadFile({
+  it('should throw when config is missing', () => {
+    const include = {
+      ...TEST_OPTIONS,
+    };
+    const schema = createSchema({
+      include,
+    });
+
+    expect(() => loadFile({
+      include: TEST_OPTIONS,
       key: '',
       name: 'missing.yml',
       paths: [
         join(__dirname, '..', 'docs'),
       ],
       type: 'file',
-    })).to.be.rejectedWith(NotFoundError)
-  );
+    })).to.throw(NotFoundError);
+  });
 
-  it('should load included config', () =>
+  it('should load included config', () => {
+    const include = {
+      ...TEST_OPTIONS,
+    };
+    const schema = createSchema({
+      include,
+    });
+
     expect(loadFile({
+      include,
       key: '',
       name: 'config-include.yml',
       paths: [
@@ -71,24 +85,44 @@ describe('load config helper', async () => {
           foo: 'bar',
         },
       },
-    })
-  );
+    });
+  });
 });
 
 describe('read config helper', async () => {
-  beforeEach(() => {
-    fsOptions();
+  it('should consume enoent errors', () => {
+    const include = {
+      ...TEST_OPTIONS,
+    };
+    const schema = createSchema({
+      include,
+    });
+
+    expect(readFile({
+      include,
+      key: '',
+      name: 'missing.yml',
+      paths: [
+        'docs',
+      ],
+      type: 'file',
+    })).to.equal(undefined);
   });
 
-  afterEach(() => {
-    Object.assign(includeOptions, originalOptions);
+  it('should rethrow unknown errors', () => {
+    const include = {
+      ...TEST_OPTIONS,
+    };
+    const schema = createSchema({
+      include,
+    });
+
+    expect(() => readFile({
+      include,
+      key: '',
+      name: 'test',
+      paths: [],
+      type: 'file',
+    })).to.throw(Error);
   });
-
-  it('should consume enoent errors', () =>
-    expect(readFile(join('docs', 'missing.yml'))).to.equal(undefined)
-  );
-
-  it('should rethrow unknown errors', () =>
-    expect(() => readFile('test')).to.throw(Error)
-  );
 });

@@ -15,6 +15,7 @@ export interface FileSourceOptions extends BaseSourceOptions
 
 |  Property | Type | Description |
 |  --- | --- | --- |
+|  [include](./js-config.filesourceoptions.include.md) | IncludeOptions |  |
 |  [key](./js-config.filesourceoptions.key.md) | string |  |
 |  [name](./js-config.filesourceoptions.name.md) | string |  |
 |  [paths](./js-config.filesourceoptions.paths.md) | Array&lt;string&gt; |  |

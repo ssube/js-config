@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-export declare function readFile(path: string): string | undefined;
+export declare function readFile(options: FileSourceOptions): string | undefined;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  path | string |  |
+|  options | [FileSourceOptions](./js-config.filesourceoptions.md) |  |
 
 <b>Returns:</b>
 
