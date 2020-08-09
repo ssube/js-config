@@ -1,5 +1,6 @@
-import { InvalidArgumentError, mustExist } from '@apextoaster/js-utils';
-import { Ajv } from 'ajv';
+import { doesExist, InvalidArgumentError, mustExist, Optional } from '@apextoaster/js-utils';
+import { createSchema, SchemaOptions } from '@apextoaster/js-yaml-schema';
+import Ajv, { Ajv as AjvInstance, Options as AjvOptions } from 'ajv';
 
 import { ArgSourceOptions, loadArgs } from './args';
 import { EnvSourceOptions, loadEnv } from './env';
@@ -11,27 +12,26 @@ export interface BaseSourceOptions {
   type: string;
 }
 
-export interface ConstSourceOptions extends BaseSourceOptions {
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  data: any;
+export interface ConstSourceOptions<TData> extends BaseSourceOptions {
+  data: Partial<TData>;
   type: 'const';
 }
 
-export type SourceOptions = ArgSourceOptions | ConstSourceOptions | EnvSourceOptions | FileSourceOptions;
+export type SourceOptions<TData> = ArgSourceOptions | ConstSourceOptions<TData> | EnvSourceOptions | FileSourceOptions;
 
-export interface ConfigOptions {
+export interface ConfigOptions<TData> {
   key: string;
-  schema: Ajv;
-  sources: Array<SourceOptions>;
+  schema: AjvInstance;
+  sources: Array<SourceOptions<TData>>;
 }
 
 export class Config<TData> {
   /* eslint-disable */
   protected readonly data: Partial<TData>;
-  protected readonly schema: Ajv;
+  protected readonly schema: AjvInstance;
   /* eslint-enable */
 
-  constructor(options: ConfigOptions) {
+  constructor(options: ConfigOptions<TData>) {
     this.data = {};
     this.schema = options.schema;
 
@@ -50,7 +50,7 @@ export class Config<TData> {
     return this.data as Readonly<TData>;
   }
 
-  public loadSources(sources: Array<SourceOptions>): Array<unknown> {
+  public loadSources(sources: Array<SourceOptions<TData>>): Array<unknown> {
     const errors = [];
 
     for (const source of sources) {
@@ -90,8 +90,7 @@ export class Config<TData> {
     Object.assign(this.data, datum);
   }
 
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  protected mergeSource(source: SourceOptions, datum: any): Array<unknown> {
+  protected mergeSource(source: SourceOptions<TData>, datum: Partial<TData>): Array<unknown> {
     const valid = this.schema.validate({
       $ref: source.key,
     }, datum);
@@ -102,4 +101,62 @@ export class Config<TData> {
       return mustExist(this.schema.errors);
     }
   }
+}
+
+// from https://github.com/microsoft/TypeScript/issues/23199#issuecomment-379323872
+type FilteredKeys<T, U> = { [P in keyof T]: T[P] extends U ? P : never }[keyof T];
+
+interface FullOptions<TData> {
+  ajv: AjvOptions;
+  config: Omit<ConfigOptions<TData>, 'schema'>;
+  process: Optional<NodeJS.Process>;
+  schema: SchemaOptions;
+  defer: {
+    home: FilteredKeys<TData, string>;
+    paths: FilteredKeys<TData, string>;
+    name: FilteredKeys<TData, string>;
+  };
+}
+
+export function createConfig<TData>(options: FullOptions<TData>) {
+  createSchema(options.schema);
+
+  const ajv = new Ajv(options.ajv);
+  const config = new Config<TData>({
+    ...options.config,
+    schema: ajv,
+  });
+
+  const data = config.getData();
+  const paths: Array<string> = [];
+
+  const name = data[options.defer.name];
+  /* eslint-disable-next-line @typescript-eslint/tslint/config */
+  if (typeof name === 'string') {
+    const dataPaths = data[options.defer.paths];
+    if (Array.isArray(dataPaths)) {
+      paths.push(...dataPaths);
+    }
+
+    const dataHome = data[options.defer.home];
+    /* eslint-disable-next-line @typescript-eslint/tslint/config */
+    if (typeof dataHome === 'string') {
+      const home = (options.process || process).env[dataHome];
+      if (doesExist(home)) {
+        paths.push(home);
+      }
+    }
+
+    const { include } = options.schema;
+
+    config.loadSources([{
+      include,
+      key: '',
+      name,
+      paths,
+      type: 'file',
+    }]);
+  }
+
+  return config;
 }

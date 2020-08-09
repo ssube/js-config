@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-schema: Ajv;
+schema: AjvInstance;
 ```

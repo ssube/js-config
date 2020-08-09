@@ -9,12 +9,12 @@ Constructs a new instance of the `Config` class
 <b>Signature:</b>
 
 ```typescript
-constructor(options: ConfigOptions);
+constructor(options: ConfigOptions<TData>);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | [ConfigOptions](./js-config.configoptions.md) |  |
+|  options | [ConfigOptions](./js-config.configoptions.md)<!-- -->&lt;TData&gt; |  |
 

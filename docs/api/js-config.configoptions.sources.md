@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-sources: Array<SourceOptions>;
+sources: Array<SourceOptions<TData>>;
 ```

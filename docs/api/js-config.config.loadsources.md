@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-loadSources(sources: Array<SourceOptions>): Array<unknown>;
+loadSources(sources: Array<SourceOptions<TData>>): Array<unknown>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  sources | Array&lt;SourceOptions&gt; |  |
+|  sources | Array&lt;SourceOptions&lt;TData&gt;&gt; |  |
 
 <b>Returns:</b>
 

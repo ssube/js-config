@@ -7,15 +7,15 @@
 <b>Signature:</b>
 
 ```typescript
-protected mergeSource(source: SourceOptions, datum: any): Array<unknown>;
+protected mergeSource(source: SourceOptions<TData>, datum: Partial<TData>): Array<unknown>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  source | SourceOptions |  |
-|  datum | any |  |
+|  source | SourceOptions&lt;TData&gt; |  |
+|  datum | Partial&lt;TData&gt; |  |
 
 <b>Returns:</b>
 

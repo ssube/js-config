@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-export interface ConfigOptions 
+export interface ConfigOptions<TData> 
 ```
 
 ## Properties
@@ -15,6 +15,6 @@ export interface ConfigOptions
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [key](./js-config.configoptions.key.md) | string |  |
-|  [schema](./js-config.configoptions.schema.md) | Ajv |  |
-|  [sources](./js-config.configoptions.sources.md) | Array&lt;SourceOptions&gt; |  |
+|  [schema](./js-config.configoptions.schema.md) | AjvInstance |  |
+|  [sources](./js-config.configoptions.sources.md) | Array&lt;SourceOptions&lt;TData&gt;&gt; |  |
 

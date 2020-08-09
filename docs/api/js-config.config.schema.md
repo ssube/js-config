@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-protected readonly schema: Ajv;
+protected readonly schema: AjvInstance;
 ```
