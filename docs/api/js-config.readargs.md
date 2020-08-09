@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-export declare function readArgs(proc?: NodeJS.Process): Array<string>;
+export declare function readArgs(options: ArgSourceOptions): Array<string>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  proc | NodeJS.Process |  |
+|  options | [ArgSourceOptions](./js-config.argsourceoptions.md) |  |
 
 <b>Returns:</b>
 

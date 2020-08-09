@@ -8,23 +8,29 @@
 
 |  Class | Description |
 |  --- | --- |
+|  [Config](./js-config.config.md) |  |
 |  [Schema](./js-config.schema.md) |  |
 
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [completePaths(name, extras)](./js-config.completepaths.md) | With the given name, generate all potential config paths in their complete, absolute form.<!-- -->This will include the value of <code>ISOLEX_HOME</code>, <code>HOME</code>, the current working directory, and any extra paths passed as the final arguments. |
-|  [loadArgs(args)](./js-config.loadargs.md) |  |
-|  [loadConfig(name, extras)](./js-config.loadconfig.md) |  |
+|  [loadArgs(options)](./js-config.loadargs.md) |  |
+|  [loadEnv(options)](./js-config.loadenv.md) |  |
+|  [loadFile(options)](./js-config.loadfile.md) |  |
 |  [loadObject(data, schema)](./js-config.loadobject.md) |  |
-|  [readArgs(proc)](./js-config.readargs.md) |  |
-|  [readConfig(path)](./js-config.readconfig.md) |  |
+|  [readArgs(options)](./js-config.readargs.md) |  |
+|  [readEnv(options)](./js-config.readenv.md) | Read each env var with the given prefix. |
+|  [readFile(path)](./js-config.readfile.md) |  |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
+|  [ArgSourceOptions](./js-config.argsourceoptions.md) |  |
+|  [ConfigOptions](./js-config.configoptions.md) |  |
+|  [EnvSourceOptions](./js-config.envsourceoptions.md) |  |
+|  [FileSourceOptions](./js-config.filesourceoptions.md) |  |
 |  [SchemaResult](./js-config.schemaresult.md) |  |
 
 ## Type Aliases
