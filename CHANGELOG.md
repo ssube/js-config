@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2-4](///compare/v0.1.2-3...v0.1.2-4) (2020-08-09)
+
+
+### Features
+
+* **config:** make const sources and create helper typesafe 33a3927
+
 ### [0.1.2-3](///compare/v0.1.2-2...v0.1.2-3) (2020-08-09)
 
 
