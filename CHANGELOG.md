@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2-6](///compare/v0.1.2-5...v0.1.2-6) (2020-08-09)
+
+
+### Bug Fixes
+
+* expose createConfig in public API c58ff33
+
 ### [0.1.2-5](///compare/v0.1.2-4...v0.1.2-5) (2020-08-09)
 
 
