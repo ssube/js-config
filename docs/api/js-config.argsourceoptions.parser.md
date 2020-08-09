@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-parser: unknown;
+parser: Argv<unknown>;
 ```

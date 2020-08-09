@@ -1,16 +1,17 @@
 import { Optional } from '@apextoaster/js-utils';
+import { Argv } from 'yargs';
 
 import { BaseSourceOptions } from '../config';
 
 export interface ArgSourceOptions extends BaseSourceOptions {
-  parser: unknown;
+  parser: Argv<unknown>;
   process: Optional<NodeJS.Process>;
   type: 'args';
 }
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 export function loadArgs(options: ArgSourceOptions): any {
-  return readArgs(options);
+  return options.parser.parse(readArgs(options));
 }
 
 export function readArgs(options: ArgSourceOptions): Array<string> {
