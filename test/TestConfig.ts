@@ -30,7 +30,6 @@ describe('collected config', () => {
     expect(config.getData()).to.deep.equal({
       bar: 1,
       foo: 2,
-      zin: 3,
     });
   });
 

@@ -33,12 +33,12 @@ export function readFile(options: FileSourceOptions): string | undefined {
       const data = options.include.read(p, {
         encoding: 'utf-8',
       });
+
       return data;
     } catch (err) {
-      if (err.code === 'ENOENT') {
-        return undefined;
+      if (err.code !== 'ENOENT') {
+        throw err;
       }
-      throw err;
     }
   }
 
