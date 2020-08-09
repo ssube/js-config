@@ -106,10 +106,14 @@ export class Config<TData> {
 // from https://github.com/microsoft/TypeScript/issues/23199#issuecomment-379323872
 type FilteredKeys<T, U> = { [P in keyof T]: T[P] extends U ? P : never }[keyof T];
 
+interface ProcessLike {
+  env: Record<string, string | undefined>;
+}
+
 interface FullOptions<TData> {
   ajv: AjvOptions;
   config: Omit<ConfigOptions<TData>, 'schema'>;
-  process: Optional<NodeJS.Process>;
+  process: Optional<ProcessLike>;
   schema: SchemaOptions;
   defer: {
     home: FilteredKeys<TData, string>;
@@ -118,6 +122,9 @@ interface FullOptions<TData> {
   };
 }
 
+/**
+ * @public
+ */
 export function createConfig<TData>(options: FullOptions<TData>) {
   createSchema(options.schema);
 

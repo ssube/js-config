@@ -15,6 +15,7 @@
 
 |  Function | Description |
 |  --- | --- |
+|  [createConfig(options)](./js-config.createconfig.md) |  |
 |  [loadArgs(options)](./js-config.loadargs.md) |  |
 |  [loadEnv(options)](./js-config.loadenv.md) |  |
 |  [loadFile(options)](./js-config.loadfile.md) |  |
