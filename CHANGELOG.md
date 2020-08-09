@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2-2](///compare/v0.1.2-1...v0.1.2-2) (2020-08-09)
+
+
+### Features
+
+* implement arg parsing via yargs b4ee474
+* switch to instantiated API, add Config entrypoint class 696cb24
+
+
+### Bug Fixes
+
+* **file:** use include options, instantiate schema for tests a0dc7be
+
 ### [0.1.2-1](///compare/v0.1.2-0...v0.1.2-1) (2020-08-06)
 
 
