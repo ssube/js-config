@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2-7](///compare/v0.1.2-6...v0.1.2-7) (2020-08-10)
+
+
+### Bug Fixes
+
+* remove ref on node types b3eb1a5
+
 ### [0.1.2-6](///compare/v0.1.2-5...v0.1.2-6) (2020-08-09)
 
 
