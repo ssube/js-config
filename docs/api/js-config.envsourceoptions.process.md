@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-process: Optional<NodeJS.Process>;
+process: Optional<ProcessLike>;
 ```

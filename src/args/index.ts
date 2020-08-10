@@ -1,11 +1,11 @@
 import { Optional } from '@apextoaster/js-utils';
 import { Argv } from 'yargs';
 
-import { BaseSourceOptions } from '../config';
+import { BaseSourceOptions, ProcessLike } from '../config';
 
 export interface ArgSourceOptions extends BaseSourceOptions {
   parser: Argv<unknown>;
-  process: Optional<NodeJS.Process>;
+  process: Optional<ProcessLike>;
   type: 'args';
 }
 

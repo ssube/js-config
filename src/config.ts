@@ -7,6 +7,11 @@ import { EnvSourceOptions, loadEnv } from './env';
 import { InvalidDataError } from './error/InvalidDataError';
 import { FileSourceOptions, loadFile } from './file';
 
+export interface ProcessLike {
+  argv: Array<string>;
+  env: Record<string, string | undefined>;
+}
+
 export interface BaseSourceOptions {
   key: string;
   type: string;
@@ -21,19 +26,19 @@ export type SourceOptions<TData> = ArgSourceOptions | ConstSourceOptions<TData> 
 
 export interface ConfigOptions<TData> {
   key: string;
-  schema: AjvInstance;
+  validator: AjvInstance;
   sources: Array<SourceOptions<TData>>;
 }
 
 export class Config<TData> {
   /* eslint-disable */
   protected readonly data: Partial<TData>;
-  protected readonly schema: AjvInstance;
+  protected readonly validator: AjvInstance;
   /* eslint-enable */
 
   constructor(options: ConfigOptions<TData>) {
     this.data = {};
-    this.schema = options.schema;
+    this.validator = options.validator;
 
     const sourceErrors = this.loadSources(options.sources);
     if (sourceErrors.length > 0) {
@@ -76,13 +81,13 @@ export class Config<TData> {
   }
 
   public validateData(key: string, data = this.data): Array<unknown> {
-    const valid = this.schema.validate({
+    const valid = this.validator.validate({
       $ref: key,
     }, data);
     if (valid === true) {
       return [];
     } else {
-      return mustExist(this.schema.errors);
+      return mustExist(this.validator.errors);
     }
   }
 
@@ -91,14 +96,14 @@ export class Config<TData> {
   }
 
   protected mergeSource(source: SourceOptions<TData>, datum: Partial<TData>): Array<unknown> {
-    const valid = this.schema.validate({
+    const valid = this.validator.validate({
       $ref: source.key,
     }, datum);
     if (valid === true) {
       this.mergeData(datum);
       return [];
     } else {
-      return mustExist(this.schema.errors);
+      return mustExist(this.validator.errors);
     }
   }
 }
@@ -106,20 +111,24 @@ export class Config<TData> {
 // from https://github.com/microsoft/TypeScript/issues/23199#issuecomment-379323872
 type FilteredKeys<T, U> = { [P in keyof T]: T[P] extends U ? P : never }[keyof T];
 
-interface ProcessLike {
-  env: Record<string, string | undefined>;
-}
-
 interface FullOptions<TData> {
-  ajv: AjvOptions;
   config: Omit<ConfigOptions<TData>, 'schema'>;
-  process: Optional<ProcessLike>;
-  schema: SchemaOptions;
   defer: {
     home: FilteredKeys<TData, string>;
     paths: FilteredKeys<TData, string>;
     name: FilteredKeys<TData, string>;
   };
+  process: Optional<ProcessLike>;
+  schema: SchemaOptions;
+  validator: AjvInstance | AjvOptions;
+}
+
+export function createAjv(options: AjvInstance | AjvOptions): AjvInstance {
+  if (options instanceof Ajv) {
+    return options;
+  } else {
+    return new Ajv(options);
+  }
 }
 
 /**
@@ -128,10 +137,10 @@ interface FullOptions<TData> {
 export function createConfig<TData>(options: FullOptions<TData>) {
   createSchema(options.schema);
 
-  const ajv = new Ajv(options.ajv);
+  const validator = createAjv(options.validator);
   const config = new Config<TData>({
     ...options.config,
-    schema: ajv,
+    validator,
   });
 
   const data = config.getData();

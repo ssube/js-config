@@ -1,10 +1,10 @@
 import { Optional } from '@apextoaster/js-utils';
 
-import { BaseSourceOptions } from './config';
+import { BaseSourceOptions, ProcessLike } from './config';
 
 export interface EnvSourceOptions extends BaseSourceOptions {
   prefix: string;
-  process: Optional<NodeJS.Process>;
+  process: Optional<ProcessLike>;
   type: 'env';
 }
 

@@ -21,7 +21,7 @@ export declare class Config<TData>
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [data](./js-config.config.data.md) |  | Partial&lt;TData&gt; |  |
-|  [schema](./js-config.config.schema.md) |  | AjvInstance |  |
+|  [validator](./js-config.config.validator.md) |  | AjvInstance |  |
 
 ## Methods
 

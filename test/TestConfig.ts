@@ -18,15 +18,14 @@ export const INCLUDE_OPTIONS: IncludeOptions = {
 
 describe('collected config', () => {
   it('should load data from each source', () => {
-    const schema = new Ajv();
-    schema.addSchema({}, 'foo');
+    const validator = new Ajv();
+    validator.addSchema({}, 'foo');
 
     const config = new Config<{
       bar: number;
       foo: number;
     }>({
       key: 'foo',
-      schema,
       sources: [{
         data: {
           bar: 1,
@@ -40,6 +39,7 @@ describe('collected config', () => {
         key: 'foo',
         type: 'const',
       }],
+      validator,
     });
 
     expect(config.getData()).to.deep.equal({
@@ -49,14 +49,13 @@ describe('collected config', () => {
   });
 
   it('should validate data after loading', () => {
-    const schema = new Ajv();
-    schema.addSchema({
+    const validator = new Ajv();
+    validator.addSchema({
       type: 'number',
     }, 'foo');
 
     expect(() => new Config({
       key: 'foo',
-      schema,
       sources: [{
         data: {
           bar: 'not a number',
@@ -64,6 +63,7 @@ describe('collected config', () => {
         key: 'foo',
         type: 'const',
       }],
+      validator,
     })).to.throw(InvalidDataError);
   });
 
@@ -71,12 +71,12 @@ describe('collected config', () => {
 
   describe('create helper', () => {
     it('should load everything', () => {
+      const validator = new Ajv();
       const config = createConfig<{
         bar: string;
         bin: string;
         foo: number;
       }>({
-        ajv: {},
         config: {
           key: '',
           sources: [{
@@ -86,6 +86,7 @@ describe('collected config', () => {
             key: '',
             type: 'const',
           }],
+          validator,
         },
         defer: {
           home: 'bar',
@@ -96,6 +97,7 @@ describe('collected config', () => {
         schema: {
           include: {...INCLUDE_OPTIONS},
         },
+        validator,
       });
 
       expect(config.getData()).to.deep.equal({

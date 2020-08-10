@@ -16,6 +16,6 @@ export interface ArgSourceOptions extends BaseSourceOptions
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [parser](./js-config.argsourceoptions.parser.md) | Argv&lt;unknown&gt; |  |
-|  [process](./js-config.argsourceoptions.process.md) | Optional&lt;NodeJS.Process&gt; |  |
+|  [process](./js-config.argsourceoptions.process.md) | Optional&lt;ProcessLike&gt; |  |
 |  [type](./js-config.argsourceoptions.type.md) | 'args' |  |
 

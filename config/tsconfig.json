@@ -25,7 +25,6 @@
     "types": [
       "chai-as-promised",
       "mocha",
-      "node",
       "rollup-resources",
       "sinon-chai"
     ],
