@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-export declare function loadArgs(options: ArgSourceOptions): any;
+export declare function loadArgs<TData>(options: ArgSourceOptions<TData>): TData;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | [ArgSourceOptions](./js-config.argsourceoptions.md) |  |
+|  options | [ArgSourceOptions](./js-config.argsourceoptions.md)<!-- -->&lt;TData&gt; |  |
 
 <b>Returns:</b>
 
-any
+TData
 

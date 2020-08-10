@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-export interface ArgSourceOptions extends BaseSourceOptions 
+export interface ArgSourceOptions<TData> extends BaseSourceOptions 
 ```
 <b>Extends:</b> BaseSourceOptions
 
@@ -15,7 +15,7 @@ export interface ArgSourceOptions extends BaseSourceOptions
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [parser](./js-config.argsourceoptions.parser.md) | Argv&lt;unknown&gt; |  |
+|  [parser](./js-config.argsourceoptions.parser.md) | Parser&lt;TData&gt; |  |
 |  [process](./js-config.argsourceoptions.process.md) | Optional&lt;ProcessLike&gt; |  |
 |  [type](./js-config.argsourceoptions.type.md) | 'args' |  |
 

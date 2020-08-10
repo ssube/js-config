@@ -22,7 +22,7 @@ export interface ConstSourceOptions<TData> extends BaseSourceOptions {
   type: 'const';
 }
 
-export type SourceOptions<TData> = ArgSourceOptions | ConstSourceOptions<TData> | EnvSourceOptions | FileSourceOptions;
+export type SourceOptions<TData> = ArgSourceOptions<TData> | ConstSourceOptions<TData> | EnvSourceOptions | FileSourceOptions;
 
 export interface ConfigOptions<TData> {
   key: string;
