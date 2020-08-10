@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2-8](///compare/v0.1.2-7...v0.1.2-8) (2020-08-10)
+
+
+### Bug Fixes
+
+* switch to simpler signature for parser, remove yargs dep 3808b2f
+
 ### [0.1.2-7](///compare/v0.1.2-6...v0.1.2-7) (2020-08-10)
 
 
