@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2-9](///compare/v0.1.2-8...v0.1.2-9) (2020-08-12)
+
+
+### Bug Fixes
+
+* export parser and process types 40cfaa5
+
 ### [0.1.2-8](///compare/v0.1.2-7...v0.1.2-8) (2020-08-10)
 
 
