@@ -14,7 +14,7 @@ protected mergeSource(source: SourceOptions<TData>, datum: Partial<TData>): Arra
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  source | SourceOptions&lt;TData&gt; |  |
+|  source | [SourceOptions](./js-config.sourceoptions.md)<!-- -->&lt;TData&gt; |  |
 |  datum | Partial&lt;TData&gt; |  |
 
 <b>Returns:</b>

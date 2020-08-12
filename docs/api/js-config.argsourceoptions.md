@@ -15,7 +15,7 @@ export interface ArgSourceOptions<TData> extends BaseSourceOptions
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [parser](./js-config.argsourceoptions.parser.md) | Parser&lt;TData&gt; |  |
-|  [process](./js-config.argsourceoptions.process.md) | Optional&lt;ProcessLike&gt; |  |
+|  [parser](./js-config.argsourceoptions.parser.md) | [Parser](./js-config.parser.md)<!-- -->&lt;TData&gt; |  |
+|  [process](./js-config.argsourceoptions.process.md) | Optional&lt;[ProcessLike](./js-config.processlike.md)<!-- -->&gt; |  |
 |  [type](./js-config.argsourceoptions.type.md) | 'args' |  |
 

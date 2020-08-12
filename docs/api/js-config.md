@@ -15,6 +15,8 @@
 
 |  Function | Description |
 |  --- | --- |
+|  [completePaths(name, basePaths, options)](./js-config.completepaths.md) | With the given name, generate all potential config paths in their complete, absolute form.<!-- -->This will include the value of <code>ISOLEX_HOME</code>, <code>HOME</code>, the current working directory, and any extra paths passed as the final arguments. |
+|  [createAjv(options)](./js-config.createajv.md) |  |
 |  [createConfig(options)](./js-config.createconfig.md) |  |
 |  [loadArgs(options)](./js-config.loadargs.md) |  |
 |  [loadEnv(options)](./js-config.loadenv.md) |  |
@@ -30,8 +32,11 @@
 |  --- | --- |
 |  [ArgSourceOptions](./js-config.argsourceoptions.md) |  |
 |  [ConfigOptions](./js-config.configoptions.md) |  |
+|  [ConstSourceOptions](./js-config.constsourceoptions.md) |  |
 |  [EnvSourceOptions](./js-config.envsourceoptions.md) |  |
 |  [FileSourceOptions](./js-config.filesourceoptions.md) |  |
+|  [Parser](./js-config.parser.md) |  |
+|  [ProcessLike](./js-config.processlike.md) |  |
 |  [SchemaResult](./js-config.schemaresult.md) |  |
 
 ## Type Aliases
@@ -39,4 +44,5 @@
 |  Type Alias | Description |
 |  --- | --- |
 |  [SchemaDef](./js-config.schemadef.md) |  |
+|  [SourceOptions](./js-config.sourceoptions.md) |  |
 

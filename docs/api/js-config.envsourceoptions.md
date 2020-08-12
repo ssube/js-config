@@ -16,6 +16,6 @@ export interface EnvSourceOptions extends BaseSourceOptions
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [prefix](./js-config.envsourceoptions.prefix.md) | string |  |
-|  [process](./js-config.envsourceoptions.process.md) | Optional&lt;ProcessLike&gt; |  |
+|  [process](./js-config.envsourceoptions.process.md) | Optional&lt;[ProcessLike](./js-config.processlike.md)<!-- -->&gt; |  |
 |  [type](./js-config.envsourceoptions.type.md) | 'env' |  |
 

@@ -14,7 +14,7 @@ loadSources(sources: Array<SourceOptions<TData>>): Array<unknown>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  sources | Array&lt;SourceOptions&lt;TData&gt;&gt; |  |
+|  sources | Array&lt;[SourceOptions](./js-config.sourceoptions.md)<!-- -->&lt;TData&gt;&gt; |  |
 
 <b>Returns:</b>
 
