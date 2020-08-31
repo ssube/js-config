@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2-11](///compare/v0.1.2-10...v0.1.2-11) (2020-08-31)
+
+
+### Bug Fixes
+
+* **file:** handle EISDIR errors gracefully 9956f3f
+
 ### [0.1.2-10](///compare/v0.1.2-9...v0.1.2-10) (2020-08-31)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@apextoaster/js-config",
-  "version": "0.1.2-10",
+  "version": "0.1.2-11",
   "description": "JS config loader with validation",
   "keywords": [
     "args",
