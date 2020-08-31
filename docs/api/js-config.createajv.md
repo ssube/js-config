@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-export declare function createAjv(options: AjvInstance | AjvOptions): AjvInstance;
+export declare function createAjv(options: Optional<AjvInstance | AjvOptions>): AjvInstance;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | AjvInstance \| AjvOptions |  |
+|  options | Optional&lt;AjvInstance \| AjvOptions&gt; |  |
 
 <b>Returns:</b>
 

@@ -27,8 +27,8 @@ export type SourceOptions<TData> = ArgSourceOptions<TData> | ConstSourceOptions<
 
 export interface ConfigOptions<TData> {
   key: string;
-  validator: AjvInstance;
   sources: Array<SourceOptions<TData>>;
+  validator: AjvInstance;
 }
 
 export class Config<TData> {
@@ -102,24 +102,30 @@ export class Config<TData> {
 // from https://github.com/microsoft/TypeScript/issues/23199#issuecomment-379323872
 type FilteredKeys<T, U> = { [P in keyof T]: T[P] extends U ? P : never }[keyof T];
 
-interface CreateOptions<TData> {
-  config: Omit<ConfigOptions<TData>, 'schema'>;
-  defer: {
-    home: FilteredKeys<TData, string>;
-    paths: FilteredKeys<TData, string>;
-    name: FilteredKeys<TData, string>;
-  };
-  process: Optional<ProcessLike>;
-  schema: SchemaOptions;
-  validator: AjvInstance | AjvOptions;
+interface DeferOptions<TData> {
+  home?: FilteredKeys<TData, string>;
+  paths: FilteredKeys<TData, string>;
+  name: FilteredKeys<TData, string>;
 }
 
-export function createAjv(options: AjvInstance | AjvOptions): AjvInstance {
+interface CreateOptions<TData> {
+  config: Omit<ConfigOptions<TData>, 'validator'>;
+  defer?: DeferOptions<TData>;
+  process: Optional<ProcessLike>;
+  schema: SchemaOptions;
+  validator?: AjvInstance | AjvOptions;
+}
+
+export function createAjv(options: Optional<AjvInstance | AjvOptions>): AjvInstance {
   if (options instanceof Ajv) {
     return options;
-  } else {
+  }
+
+  if (doesExist(options)) {
     return new Ajv(options);
   }
+
+  return new Ajv();
 }
 
 /**
@@ -134,23 +140,33 @@ export function createConfig<TData>(options: CreateOptions<TData>) {
     validator,
   });
 
+  if (doesExist(options.defer)) {
+    deferConfig(config, options, options.defer);
+  }
+
+  return config;
+}
+
+export function deferConfig<TData>(config: Config<TData>, options: CreateOptions<TData>, defer: DeferOptions<TData>) {
   const data = config.getData();
   const paths: Array<string> = [];
 
-  const name = data[options.defer.name];
+  const name = data[defer.name];
   /* eslint-disable-next-line @typescript-eslint/tslint/config */
   if (typeof name === 'string') {
-    const dataPaths = data[options.defer.paths];
+    const dataPaths = data[defer.paths];
     if (Array.isArray(dataPaths)) {
       paths.push(...dataPaths);
     }
 
-    const dataHome = data[options.defer.home];
-    /* eslint-disable-next-line @typescript-eslint/tslint/config */
-    if (typeof dataHome === 'string') {
-      const home = (options.process || process).env[dataHome];
-      if (doesExist(home)) {
-        paths.push(home);
+    if (doesExist(defer.home) && defer.home !== '') {
+      const dataHome = data[defer.home];
+      /* eslint-disable-next-line @typescript-eslint/tslint/config */
+      if (typeof dataHome === 'string') {
+        const home = (options.process || process).env[dataHome];
+        if (doesExist(home)) {
+          paths.push(home);
+        }
       }
     }
 
@@ -163,6 +179,4 @@ export function createConfig<TData>(options: CreateOptions<TData>) {
       type: 'file',
     }]);
   }
-
-  return config;
 }

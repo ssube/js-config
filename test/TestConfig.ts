@@ -68,7 +68,6 @@ describe('collected config', () => {
 
   describe('create helper', () => {
     it('should load everything', () => {
-      const validator = new Ajv();
       const config = createConfig<{
         bar: string;
         bin: string;
@@ -82,7 +81,6 @@ describe('collected config', () => {
             },
             type: 'const',
           }],
-          validator,
         },
         defer: {
           home: 'bar',
@@ -93,7 +91,6 @@ describe('collected config', () => {
         schema: {
           include: {...INCLUDE_OPTIONS},
         },
-        validator,
       });
 
       expect(config.getData()).to.deep.equal({
