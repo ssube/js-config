@@ -13,7 +13,8 @@ export interface ProcessLike {
 }
 
 export interface BaseSourceOptions {
-  key: string;
+  // TODO: look into validating each source with an optional key
+  // key: string;
   type: string;
 }
 
@@ -91,27 +92,17 @@ export class Config<TData> {
     }
   }
 
-  protected mergeData(datum: Partial<TData>) {
-    Object.assign(this.data, datum);
-  }
-
   protected mergeSource(source: SourceOptions<TData>, datum: Partial<TData>): Array<unknown> {
-    const valid = this.validator.validate({
-      $ref: source.key,
-    }, datum);
-    if (valid === true) {
-      this.mergeData(datum);
-      return [];
-    } else {
-      return mustExist(this.validator.errors);
-    }
+    Object.assign(this.data, datum);
+
+    return [];
   }
 }
 
 // from https://github.com/microsoft/TypeScript/issues/23199#issuecomment-379323872
 type FilteredKeys<T, U> = { [P in keyof T]: T[P] extends U ? P : never }[keyof T];
 
-interface FullOptions<TData> {
+interface CreateOptions<TData> {
   config: Omit<ConfigOptions<TData>, 'schema'>;
   defer: {
     home: FilteredKeys<TData, string>;
@@ -134,7 +125,7 @@ export function createAjv(options: AjvInstance | AjvOptions): AjvInstance {
 /**
  * @public
  */
-export function createConfig<TData>(options: FullOptions<TData>) {
+export function createConfig<TData>(options: CreateOptions<TData>) {
   createSchema(options.schema);
 
   const validator = createAjv(options.validator);
@@ -167,7 +158,6 @@ export function createConfig<TData>(options: FullOptions<TData>) {
 
     config.loadSources([{
       include,
-      key: '',
       name,
       paths,
       type: 'file',

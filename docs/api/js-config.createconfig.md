@@ -8,14 +8,14 @@
 <b>Signature:</b>
 
 ```typescript
-export declare function createConfig<TData>(options: FullOptions<TData>): Config<TData>;
+export declare function createConfig<TData>(options: CreateOptions<TData>): Config<TData>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | FullOptions&lt;TData&gt; |  |
+|  options | CreateOptions&lt;TData&gt; |  |
 
 <b>Returns:</b>
 

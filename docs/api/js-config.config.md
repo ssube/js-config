@@ -29,7 +29,6 @@ export declare class Config<TData>
 |  --- | --- | --- |
 |  [getData()](./js-config.config.getdata.md) |  |  |
 |  [loadSources(sources)](./js-config.config.loadsources.md) |  |  |
-|  [mergeData(datum)](./js-config.config.mergedata.md) |  |  |
 |  [mergeSource(source, datum)](./js-config.config.mergesource.md) |  |  |
 |  [validateData(key, data)](./js-config.config.validatedata.md) |  |  |
 

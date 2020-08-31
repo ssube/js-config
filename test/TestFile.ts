@@ -27,7 +27,6 @@ describe('file source', async () => {
 
       expect(loadFile({
         include,
-        key: '',
         name: 'config-stderr.yml',
         paths: [
           join(__dirname, '..', 'docs'),
@@ -54,7 +53,6 @@ describe('file source', async () => {
 
       expect(() => loadFile({
         include,
-        key: '',
         name: 'missing.yml',
         paths: [
           join(__dirname, '..', 'docs'),
@@ -73,7 +71,6 @@ describe('file source', async () => {
 
       expect(loadFile({
         include,
-        key: '',
         name: 'config-include.yml',
         paths: [
           join(__dirname, '..', 'docs'),
@@ -100,7 +97,6 @@ describe('file source', async () => {
 
       expect(readFile({
         include,
-        key: '',
         name: 'missing.yml',
         paths: [
           'docs',
@@ -119,7 +115,6 @@ describe('file source', async () => {
 
       expect(() => readFile({
         include,
-        key: '',
         name: 'test',
         paths: [],
         type: 'file',

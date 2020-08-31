@@ -30,13 +30,11 @@ describe('collected config', () => {
         data: {
           bar: 1,
         },
-        key: 'foo',
         type: 'const',
       }, {
         data: {
           foo: 2,
         },
-        key: 'foo',
         type: 'const',
       }],
       validator,
@@ -60,7 +58,6 @@ describe('collected config', () => {
         data: {
           bar: 'not a number',
         },
-        key: 'foo',
         type: 'const',
       }],
       validator,
@@ -83,7 +80,6 @@ describe('collected config', () => {
             data: {
               foo: 3,
             },
-            key: '',
             type: 'const',
           }],
           validator,

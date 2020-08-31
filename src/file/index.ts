@@ -5,7 +5,6 @@ import { BaseSourceOptions } from '../config';
 import { loadObject } from '../utils';
 
 export interface FileSourceOptions extends BaseSourceOptions {
-  key: string;
   include: IncludeOptions;
   name: string;
   paths: Array<string>;
