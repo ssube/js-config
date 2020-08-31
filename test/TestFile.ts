@@ -1,9 +1,10 @@
-import { NotFoundError } from '@apextoaster/js-utils';
+import { InvalidArgumentError, NotFoundError } from '@apextoaster/js-utils';
 import { createSchema, IncludeOptions } from '@apextoaster/js-yaml-schema';
 import { expect } from 'chai';
 import { existsSync, readFileSync, realpathSync } from 'fs';
 import { DEFAULT_SAFE_SCHEMA } from 'js-yaml';
 import { join } from 'path';
+import { stub } from 'sinon';
 
 import { loadFile, readFile } from '../src/file';
 
@@ -108,6 +109,7 @@ describe('file source', async () => {
     it('should rethrow unknown errors', () => {
       const include = {
         ...TEST_OPTIONS,
+        read: stub().throws(new InvalidArgumentError()),
       };
       const schema = createSchema({
         include,
@@ -115,8 +117,8 @@ describe('file source', async () => {
 
       expect(() => readFile({
         include,
-        name: 'test',
-        paths: [],
+        name: '.fake',
+        paths: ['/C:/never/really/exists'],
         type: 'file',
       })).to.throw(Error);
     });

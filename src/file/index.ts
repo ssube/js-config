@@ -1,7 +1,7 @@
 import { doesExist, NotFoundError } from '@apextoaster/js-utils';
 import { IncludeOptions } from '@apextoaster/js-yaml-schema';
 
-import { BaseSourceOptions } from '../config';
+import { BaseSourceOptions, deferConfig } from '../config';
 import { loadObject } from '../utils';
 
 export interface FileSourceOptions extends BaseSourceOptions {
@@ -35,8 +35,12 @@ export function readFile(options: FileSourceOptions): string | undefined {
 
       return data;
     } catch (err) {
-      if (err.code !== 'ENOENT') {
-        throw err;
+      switch (err.code) {
+        case 'ENOENT':
+        case 'EISDIR':
+          continue;
+        default:
+          throw err;
       }
     }
   }

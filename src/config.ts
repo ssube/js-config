@@ -32,10 +32,8 @@ export interface ConfigOptions<TData> {
 }
 
 export class Config<TData> {
-  /* eslint-disable */
   protected readonly data: Partial<TData>;
   protected readonly validator: AjvInstance;
-  /* eslint-enable */
 
   constructor(options: ConfigOptions<TData>) {
     this.data = {};
@@ -43,12 +41,12 @@ export class Config<TData> {
 
     const sourceErrors = this.loadSources(options.sources);
     if (sourceErrors.length > 0) {
-      throw new InvalidDataError();
+      throw new InvalidDataError('source errors');
     }
 
     const schemaErrors = this.validateData(options.key);
     if (schemaErrors.length > 0) {
-      throw new InvalidDataError();
+      throw new InvalidDataError('schema errors');
     }
   }
 
