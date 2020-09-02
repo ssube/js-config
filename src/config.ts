@@ -39,11 +39,7 @@ export class Config<TData> {
     this.data = {};
     this.validator = options.validator;
 
-    const sourceErrors = this.loadSources(options.sources);
-    if (sourceErrors.length > 0) {
-      throw new InvalidDataError('source errors');
-    }
-
+    this.loadSources(options.sources);
     const schemaErrors = this.validateData(options.key);
     if (schemaErrors.length > 0) {
       throw new InvalidDataError('schema errors');
@@ -54,29 +50,25 @@ export class Config<TData> {
     return this.data as Readonly<TData>;
   }
 
-  public loadSources(sources: Array<SourceOptions<TData>>): Array<unknown> {
-    const errors = [];
-
+  public loadSources(sources: Array<SourceOptions<TData>>) {
     for (const source of sources) {
       switch (source.type) {
         case 'args':
-          errors.push(...this.mergeSource(source, loadArgs(source)));
+          this.mergeSource(source, loadArgs(source));
           break;
         case 'const':
-          errors.push(...this.mergeSource(source, source.data));
+          this.mergeSource(source, source.data);
           break;
         case 'env':
-          errors.push(...this.mergeSource(source, loadEnv(source)));
+          this.mergeSource(source, loadEnv(source));
           break;
         case 'file':
-          errors.push(...this.mergeSource(source, loadFile(source)));
+          this.mergeSource(source, loadFile(source));
           break;
         default:
           throw new InvalidArgumentError('unknown source type');
       }
     }
-
-    return errors;
   }
 
   public validateData(key: string, data = this.data): Array<unknown> {
@@ -90,10 +82,8 @@ export class Config<TData> {
     }
   }
 
-  protected mergeSource(source: SourceOptions<TData>, datum: Partial<TData>): Array<unknown> {
+  protected mergeSource(source: SourceOptions<TData>, datum: Partial<TData>) {
     Object.assign(this.data, datum);
-
-    return [];
   }
 }
 
