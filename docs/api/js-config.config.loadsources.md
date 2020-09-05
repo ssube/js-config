@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-loadSources(sources: Array<SourceOptions<TData>>): Array<unknown>;
+loadSources(sources: Array<SourceOptions<TData>>): void;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ loadSources(sources: Array<SourceOptions<TData>>): Array<unknown>;
 
 <b>Returns:</b>
 
-Array&lt;unknown&gt;
+void
 

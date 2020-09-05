@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-protected mergeSource(source: SourceOptions<TData>, datum: Partial<TData>): Array<unknown>;
+protected mergeSource(source: SourceOptions<TData>, datum: Partial<TData>): void;
 ```
 
 ## Parameters
@@ -19,5 +19,5 @@ protected mergeSource(source: SourceOptions<TData>, datum: Partial<TData>): Arra
 
 <b>Returns:</b>
 
-Array&lt;unknown&gt;
+void
 
