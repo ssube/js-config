@@ -1,9 +1,9 @@
 import { InvalidArgumentError, isNil } from '@apextoaster/js-utils';
-import { safeLoad, Schema } from 'js-yaml';
+import { load, Schema } from 'js-yaml';
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 export function loadObject(data: string, schema: Schema): any {
-  const val = safeLoad(data, {
+  const val = load(data, {
     schema,
   });
 

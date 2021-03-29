@@ -1,7 +1,7 @@
-import { doesExist, NotFoundError } from '@apextoaster/js-utils';
+import { doesExist, mustExist, NotFoundError } from '@apextoaster/js-utils';
 import { IncludeOptions } from '@apextoaster/js-yaml-schema';
 
-import { BaseSourceOptions, deferConfig } from '../config';
+import { BaseSourceOptions } from '../config';
 import { loadObject } from '../utils';
 
 export interface FileSourceOptions extends BaseSourceOptions {
@@ -16,7 +16,7 @@ export function loadFile(options: FileSourceOptions): any {
   const data = readFile(options);
 
   if (doesExist(data)) {
-    return loadObject(data, options.include.schema);
+    return loadObject(data, mustExist(options.include.schema));
   }
 
   throw new NotFoundError('unable to load config');

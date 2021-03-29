@@ -2,7 +2,7 @@ import { IncludeOptions } from '@apextoaster/js-yaml-schema';
 import Ajv from 'ajv';
 import { expect } from 'chai';
 import { existsSync, readFileSync, realpathSync } from 'fs';
-import { DEFAULT_SAFE_SCHEMA } from 'js-yaml';
+import { DEFAULT_SCHEMA } from 'js-yaml';
 import { join } from 'path';
 
 import { Config, createConfig } from '../src/config';
@@ -13,7 +13,7 @@ export const INCLUDE_OPTIONS: IncludeOptions = {
   join,
   read: readFileSync,
   resolve: realpathSync,
-  schema: DEFAULT_SAFE_SCHEMA,
+  schema: DEFAULT_SCHEMA,
 };
 
 describe('collected config', () => {

@@ -2,7 +2,7 @@ import { InvalidArgumentError, NotFoundError } from '@apextoaster/js-utils';
 import { createSchema, IncludeOptions } from '@apextoaster/js-yaml-schema';
 import { expect } from 'chai';
 import { existsSync, readFileSync, realpathSync } from 'fs';
-import { DEFAULT_SAFE_SCHEMA } from 'js-yaml';
+import { DEFAULT_SCHEMA } from 'js-yaml';
 import { join } from 'path';
 import { stub } from 'sinon';
 
@@ -13,7 +13,7 @@ const TEST_OPTIONS: IncludeOptions = {
   join,
   read: readFileSync,
   resolve: realpathSync,
-  schema: DEFAULT_SAFE_SCHEMA,
+  schema: DEFAULT_SCHEMA,
 };
 
 describe('file source', async () => {
@@ -25,6 +25,7 @@ describe('file source', async () => {
       const schema = createSchema({
         include,
       });
+      include.schema = schema;
 
       expect(loadFile({
         include,
@@ -51,6 +52,7 @@ describe('file source', async () => {
       const schema = createSchema({
         include,
       });
+      include.schema = schema;
 
       expect(() => loadFile({
         include,
@@ -69,6 +71,7 @@ describe('file source', async () => {
       const schema = createSchema({
         include,
       });
+      include.schema = schema;
 
       expect(loadFile({
         include,
@@ -95,6 +98,7 @@ describe('file source', async () => {
       const schema = createSchema({
         include,
       });
+      include.schema = schema;
 
       expect(readFile({
         include,
@@ -114,6 +118,7 @@ describe('file source', async () => {
       const schema = createSchema({
         include,
       });
+      include.schema = schema;
 
       expect(() => readFile({
         include,
