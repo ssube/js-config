@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-0](///compare/v0.1.2-11...v0.2.0-0) (2021-03-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* includes all breaking changes from js-yaml v4 and
+js-yaml-schema readonly options.
+
+### Bug Fixes
+
+* update js-yaml and js-yaml-schema 99b5b58
+
 ### [0.1.2-11](///compare/v0.1.2-10...v0.1.2-11) (2020-08-31)
 
 
