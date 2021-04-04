@@ -9,3 +9,5 @@
 ```typescript
 export declare type SourceOptions<TData> = ArgSourceOptions<TData> | ConstSourceOptions<TData> | EnvSourceOptions | FileSourceOptions;
 ```
+<b>References:</b> [ArgSourceOptions](./js-config.argsourceoptions.md)<!-- -->, [ConstSourceOptions](./js-config.constsourceoptions.md)<!-- -->, [EnvSourceOptions](./js-config.envsourceoptions.md)<!-- -->, [FileSourceOptions](./js-config.filesourceoptions.md)
+
