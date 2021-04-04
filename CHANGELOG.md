@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0-2](///compare/v0.2.0-1...v0.2.0-2) (2021-04-04)
+
+
+### Bug Fixes
+
+* **build:** pull images from Nexus 6659d83
+
 ## [0.2.0-1](///compare/v0.2.0-0...v0.2.0-1) (2021-04-04)
 
 ## [0.2.0-0](///compare/v0.1.2-11...v0.2.0-0) (2021-03-29)
