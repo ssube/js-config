@@ -3,6 +3,7 @@ import Ajv from 'ajv';
 import { expect } from 'chai';
 import { existsSync, readFileSync, realpathSync } from 'fs';
 import { DEFAULT_SCHEMA } from 'js-yaml';
+import { ConsoleLogger } from 'noicejs';
 import { join } from 'path';
 
 import { Config, createConfig } from '../src/config';
@@ -25,6 +26,7 @@ describe('collected config', () => {
       bar: number;
       foo: number;
     }>({
+      include: INCLUDE_OPTIONS,
       key: 'foo',
       sources: [{
         data: {
@@ -53,6 +55,7 @@ describe('collected config', () => {
     }, 'foo');
 
     expect(() => new Config({
+      include: INCLUDE_OPTIONS,
       key: 'foo',
       sources: [{
         data: {
@@ -89,13 +92,41 @@ describe('collected config', () => {
         },
         process,
         schema: {
-          include: {...INCLUDE_OPTIONS},
+          include: INCLUDE_OPTIONS,
         },
       });
 
       expect(config.getData()).to.deep.equal({
         foo: 3,
       });
+    });
+
+    it('should set up extended schema', () => {
+      const config = createConfig<{
+        data: {
+          foo: string;
+          stream: unknown;
+        };
+      }>({
+        config: {
+          key: '',
+          sources: [{
+            name: 'config-stream.yml',
+            paths: [
+              join(__dirname, '..', 'docs'),
+            ],
+            type: 'file',
+          }],
+        },
+        process,
+        schema: {
+          include: INCLUDE_OPTIONS,
+        },
+      });
+
+      const {data} = config.getData();
+      expect(data.foo).to.equal('bar');
+      expect(data.stream).to.equal(process.stdout);
     });
   });
 });

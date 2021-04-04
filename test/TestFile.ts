@@ -88,6 +88,30 @@ describe('file source', async () => {
         },
       });
     });
+
+    it('should load streams', () => {
+      const include = {
+        ...TEST_OPTIONS,
+      };
+      const schema = createSchema({
+        include,
+      });
+      include.schema = schema;
+
+      expect(loadFile({
+        include,
+        name: 'config-stream.yml',
+        paths: [
+          join(__dirname, '..', 'docs'),
+        ],
+        type: 'file',
+      })).to.deep.include({
+        data: {
+          foo: 'bar',
+          stream: process.stdout,
+        },
+      });
+    });
   });
 
   describe('read file', async () => {

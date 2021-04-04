@@ -1,5 +1,5 @@
 import { doesExist, InvalidArgumentError, mustExist, Optional } from '@apextoaster/js-utils';
-import { createSchema, SchemaOptions } from '@apextoaster/js-yaml-schema';
+import { createSchema, IncludeOptions, SchemaOptions } from '@apextoaster/js-yaml-schema';
 import Ajv, { Ajv as AjvInstance, Options as AjvOptions } from 'ajv';
 
 import { ArgSourceOptions, loadArgs } from './args';
@@ -23,20 +23,23 @@ export interface ConstSourceOptions<TData> extends BaseSourceOptions {
   type: 'const';
 }
 
-export type SourceOptions<TData> = ArgSourceOptions<TData> | ConstSourceOptions<TData> | EnvSourceOptions | FileSourceOptions;
+export type SourceOptions<TData> = ArgSourceOptions<TData> | ConstSourceOptions<TData> | EnvSourceOptions | Omit<FileSourceOptions, 'include'>;
 
 export interface ConfigOptions<TData> {
   key: string;
+  include: IncludeOptions;
   sources: Array<SourceOptions<TData>>;
   validator: AjvInstance;
 }
 
 export class Config<TData> {
   protected readonly data: Partial<TData>;
+  protected readonly include: IncludeOptions;
   protected readonly validator: AjvInstance;
 
   constructor(options: ConfigOptions<TData>) {
     this.data = {};
+    this.include = options.include;
     this.validator = options.validator;
 
     this.loadSources(options.sources);
@@ -63,7 +66,10 @@ export class Config<TData> {
           this.mergeSource(source, loadEnv(source));
           break;
         case 'file':
-          this.mergeSource(source, loadFile(source));
+          this.mergeSource(source, loadFile({
+            ...source,
+            include: this.include,
+          }));
           break;
         default:
           throw new InvalidArgumentError('unknown source type');
@@ -97,7 +103,7 @@ interface DeferOptions<TData> {
 }
 
 interface CreateOptions<TData> {
-  config: Omit<ConfigOptions<TData>, 'validator'>;
+  config: Omit<ConfigOptions<TData>, 'include' | 'validator'>;
   defer?: DeferOptions<TData>;
   process: Optional<ProcessLike>;
   schema: SchemaOptions;
@@ -120,11 +126,14 @@ export function createAjv(options: Optional<AjvInstance | AjvOptions>): AjvInsta
  * @public
  */
 export function createConfig<TData>(options: CreateOptions<TData>) {
-  createSchema(options.schema);
-
+  const schema = createSchema(options.schema);
   const validator = createAjv(options.validator);
   const config = new Config<TData>({
     ...options.config,
+    include: {
+      ...options.schema.include,
+      schema,
+    },
     validator,
   });
 
@@ -158,10 +167,7 @@ export function deferConfig<TData>(config: Config<TData>, options: CreateOptions
       }
     }
 
-    const { include } = options.schema;
-
     config.loadSources([{
-      include,
       name,
       paths,
       type: 'file',

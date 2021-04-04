@@ -14,6 +14,7 @@ export interface ConfigOptions<TData>
 
 |  Property | Type | Description |
 |  --- | --- | --- |
+|  [include](./js-config.configoptions.include.md) | IncludeOptions |  |
 |  [key](./js-config.configoptions.key.md) | string |  |
 |  [sources](./js-config.configoptions.sources.md) | Array&lt;[SourceOptions](./js-config.sourceoptions.md)<!-- -->&lt;TData&gt;&gt; |  |
 |  [validator](./js-config.configoptions.validator.md) | AjvInstance |  |

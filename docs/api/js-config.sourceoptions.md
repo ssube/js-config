@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type SourceOptions<TData> = ArgSourceOptions<TData> | ConstSourceOptions<TData> | EnvSourceOptions | FileSourceOptions;
+export declare type SourceOptions<TData> = ArgSourceOptions<TData> | ConstSourceOptions<TData> | EnvSourceOptions | Omit<FileSourceOptions, 'include'>;
 ```
 <b>References:</b> [ArgSourceOptions](./js-config.argsourceoptions.md)<!-- -->, [ConstSourceOptions](./js-config.constsourceoptions.md)<!-- -->, [EnvSourceOptions](./js-config.envsourceoptions.md)<!-- -->, [FileSourceOptions](./js-config.filesourceoptions.md)
 
