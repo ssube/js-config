@@ -1,6 +1,6 @@
-import { Optional } from '@apextoaster/js-utils';
+import { makeDict, Optional } from '@apextoaster/js-utils';
 
-import { BaseSourceOptions, ProcessLike } from './config';
+import { BaseSourceOptions, ProcessLike } from '../config';
 
 export interface EnvSourceOptions extends BaseSourceOptions {
   prefix: string;
@@ -8,9 +8,8 @@ export interface EnvSourceOptions extends BaseSourceOptions {
   type: 'env';
 }
 
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-export function loadEnv(options: EnvSourceOptions): any {
-  return readEnv(options);
+export function loadEnv(options: EnvSourceOptions): Record<string, unknown> {
+  return makeDict(readEnv(options));
 }
 
 /**

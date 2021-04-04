@@ -11,8 +11,7 @@ export interface FileSourceOptions extends BaseSourceOptions {
   type: 'file';
 }
 
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-export function loadFile(options: FileSourceOptions): any {
+export function loadFile(options: FileSourceOptions): Record<string, unknown> {
   const data = readFile(options);
 
   if (doesExist(data)) {

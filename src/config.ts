@@ -18,6 +18,8 @@ export interface BaseSourceOptions {
   type: string;
 }
 
+export type BaseConfigData = Record<string, unknown>;
+
 export interface ConstSourceOptions<TData> extends BaseSourceOptions {
   data: Partial<TData>;
   type: 'const';
@@ -31,7 +33,7 @@ export interface ConfigOptions<TData> {
   validator: AjvInstance;
 }
 
-export class Config<TData> {
+export class Config<TData extends BaseConfigData> {
   protected readonly data: Partial<TData>;
   protected readonly validator: AjvInstance;
 
@@ -82,7 +84,7 @@ export class Config<TData> {
     }
   }
 
-  protected mergeSource(source: SourceOptions<TData>, datum: Partial<TData>) {
+  protected mergeSource(source: SourceOptions<TData>, datum: Record<string, unknown>) {
     Object.assign(this.data, datum);
   }
 }
@@ -119,7 +121,7 @@ export function createAjv(options: Optional<AjvInstance | AjvOptions>): AjvInsta
 /**
  * @public
  */
-export function createConfig<TData>(options: CreateOptions<TData>) {
+export function createConfig<TData extends BaseConfigData>(options: CreateOptions<TData>) {
   createSchema(options.schema);
 
   const validator = createAjv(options.validator);
@@ -135,7 +137,7 @@ export function createConfig<TData>(options: CreateOptions<TData>) {
   return config;
 }
 
-export function deferConfig<TData>(config: Config<TData>, options: CreateOptions<TData>, defer: DeferOptions<TData>) {
+export function deferConfig<TData extends BaseConfigData>(config: Config<TData>, options: CreateOptions<TData>, defer: DeferOptions<TData>) {
   const data = config.getData();
   const paths: Array<string> = [];
 
